@@ -1,6 +1,7 @@
 import Foundation
 
-// Модель секундомера
+// model
+
 class Stopwatch {
     var isRunning: Bool = false
     var startTime: Date?
@@ -25,7 +26,7 @@ class Stopwatch {
     }
 }
 
-// Модель таймера
+
 class TimerModel {
     var timer: Timer?
     
@@ -41,7 +42,7 @@ class TimerModel {
     }
 }
 
-// Будильник
+
 class Alarm {
     var alarmTime: Date?
     
@@ -56,7 +57,7 @@ class Alarm {
     }
 }
 
-// Модель часов
+
 class Clock {
     func getCurrentTime() -> String {
         let dateFormatter = DateFormatter()
@@ -66,86 +67,133 @@ class Clock {
 }
 
 
-// Контроллер
+// Протокол для представления (View)
+protocol ConsoleView {
+    func displayStopwatchStarted()
+    func displayStopwatchStopped()
+    func displayStopwatchReset()
+    func displayTimerStarted(duration: TimeInterval)
+    func displayTimerStopped()
+    func displayAlarmSet(for time: Date)
+    func displayAlarmTimeReached()
+    func displayAlarmNotReached()
+    func displayCurrentTime(_ time: String)
+}
+
+
+// Реализация консольного представления
+class ConsoleViewImplementation: ConsoleView {
+    func displayStopwatchStarted() {
+        print("Stopwatch started")
+    }
+    
+    func displayStopwatchStopped() {
+        print("Stopwatch stopped")
+    }
+    
+    func displayStopwatchReset() {
+        print("Stopwatch reset")
+    }
+    
+    func displayTimerStarted(duration: TimeInterval) {
+        print("Timer started for \(duration) seconds")
+    }
+    
+    func displayTimerStopped() {
+        print("Timer stopped")
+    }
+    
+    func displayAlarmSet(for time: Date) {
+        print("Alarm set for \(time)")
+    }
+    
+    func displayAlarmTimeReached() {
+        print("Alarm time reached!")
+    }
+    
+    func displayAlarmNotReached() {
+        print("Alarm not yet reached")
+    }
+    
+    func displayCurrentTime(_ time: String) {
+        print("Current time is: \(time)")
+    }
+}
+
+// Обновленный контроллер с поддержкой представления
 class ConsoleController {
     let stopwatch = Stopwatch()
     let timerModel = TimerModel()
     let alarm = Alarm()
     let clock = Clock()
+    let view: ConsoleView
     
-    // Запуск секундомера
+    init(view: ConsoleView) {
+        self.view = view
+    }
+
     func startStopwatch() {
         stopwatch.start()
-        print("Stopwatch started")
+        view.displayStopwatchStarted()
     }
     
-    // Остановка секундомера
     func stopStopwatch() {
         stopwatch.stop()
-        print("Stopwatch stopped")
+        view.displayStopwatchStopped()
     }
     
-    // Сброс секундомера
     func resetStopwatch() {
         stopwatch.reset()
-        print("Stopwatch reset")
+        view.displayStopwatchReset()
     }
     
-    // Запуск таймера
     func startTimer(duration: TimeInterval, completion: @escaping () -> Void) {
         timerModel.startTimer(duration: duration, completion: completion)
-        print("Timer started for \(duration) seconds")
+        view.displayTimerStarted(duration: duration)
     }
     
-    // Остановка таймера
     func stopTimer() {
         timerModel.stopTimer()
-        print("Timer stopped")
+        view.displayTimerStopped()
     }
     
-    // Установка будильника
     func setAlarm(time: Date) {
         alarm.setAlarm(time: time)
-        print("Alarm set for \(time)")
+        view.displayAlarmSet(for: time)
     }
     
-    // Проверка будильника
     func checkAlarm() {
         if alarm.checkAlarm() {
-            print("Alarm time reached!")
+            view.displayAlarmTimeReached()
         } else {
-            print("Alarm not yet reached")
+            view.displayAlarmNotReached()
         }
     }
     
-    // Текущее время
-    func getCurrentTime() -> String {
+    func getCurrentTime() {
         let currentTime = clock.getCurrentTime()
-        print("Current time is: \(currentTime)")
-        return currentTime
+        view.displayCurrentTime(currentTime)
     }
 }
 
-// Создание экземпляра ConsoleController
-let controller = ConsoleController()
+// Создание экземпляра ConsoleViewImplementation
+let consoleView = ConsoleViewImplementation()
 
-// Использование функционала секундомера
-controller.startStopwatch() // Запуск секундомера
-// Ждем некоторое время, например, 5 секунд, перед остановкой
-sleep(5) // Задержка в 5 секунд для наглядности
-controller.stopStopwatch() // Остановка секундомера
+// Создание экземпляра ConsoleController с поддержкой представления
+let controller = ConsoleController(view: consoleView)
 
-// Использование функционала таймера
+// Использование функционала: методы контроллера теперь уведомлят представление о результатах операций.
+controller.startStopwatch()
+sleep(5)
+controller.stopStopwatch()
+
 controller.startTimer(duration: 10) {
     print("Timer completion block executed")
-} // Запуск таймера на 10 секунд
+}
 
-// Использование функционала будильника
-let alarmTime = Date().addingTimeInterval(10) // Устанавливаем будильник н1 30 секунд вперед
-controller.setAlarm(time: alarmTime) // Установка будильника
-sleep(10) // Задержка 10 секунд для наглядности
-controller.checkAlarm() // Проверка сработал ли будильник
+let alarmTime = Date().addingTimeInterval(10)
+controller.setAlarm(time: alarmTime)
+sleep(10)
+controller.checkAlarm()
 
-// Использование функционала часов
-let currentTime = controller.getCurrentTime() // Получение текущего времени
-print("Current time is: \(currentTime)")
+controller.getCurrentTime()
