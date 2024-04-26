@@ -1,3 +1,36 @@
+// closures
+reversedNames = names.sorted(by: { (s1: String, s2: String)-> Bool in
+    return s1 > s2
+})
+
+reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+
+
+reversedNames = names.sorted(by: { s1, s2 in return s1 > s2} )
+
+reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
+
+reversedNames = names.sorted(by: { $0 > $1 } )
+
+reversedNames = names.sorted(by: >)
+
+let digitNames = [
+ 0: "Zero", 1: "One", 2: "Two", 3: "Three", 4: "Four",
+ 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
+]
+let numbers = [16, 58, 510]
+let strings = numbers.map { (number) -> String in
+    var number = number
+    var output = ""
+    repeat {
+        output = digitNames[number % 10]! + output
+        number /= 10
+    } while number > 0
+    return output
+}
+
+
+//for
 let individualScores = [75, 43, 103, 87, 12]
 var teamScore = 0
 for score in individualScores {
@@ -20,7 +53,7 @@ else{
 }
 print(greeting)
 
-
+//switch
 
 let vegetable = "red pepper"
 switch vegetable {
@@ -65,7 +98,7 @@ repeat {
 print(m)
 
 
-
+//guard
 func greet(person: [String: String]) {
     guard let name = person["name"] else {
         print("Hello anybody! What is your name and where are you?")
