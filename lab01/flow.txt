@@ -1,0 +1,61 @@
+let names = ["Anna", "Alex", "Brian", "Jack"]
+for name in names {
+    print("Hello, \(name)!")
+}
+
+let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+for (animalName, legCount) in numberOfLegs {
+    print("\(animalName)s have \(legCount) legs")
+}
+
+for index in 1...5 {
+    print("\(index) times 5 is \(index * 5)")
+}
+
+let minutes = 10
+for tickMark in 0..<minutes {
+    print(tickMark)
+}
+
+let minuteInterval = 5
+for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+    print(tickMark)
+}
+
+let hours = 12
+let hourInterval = 3
+for tickMark in stride(from: 3, through: hours, by: hourInterval) {
+    print(tickMark)
+}
+
+
+
+var temperatureInFahrenheit = 40
+if temperatureInFahrenheit <= 32 {
+    print("It's very cold. Consider wearing a scarf.")
+} else {
+    print("It's not that cold. Wear a t-shirt.")
+}
+
+let someCharacter: Character = "z"
+switch someCharacter {
+    case "a":
+        print("The first letter of the alphabet")
+    case "z":
+        print("The last letter of the alphabet")
+    default:
+        print("Some other character")
+}
+
+let yetAnotherPoint = (1, -1)
+switch yetAnotherPoint {
+    case let (x, y) where x == y:
+        print("(\(x), \(y)) is on the line x == y")
+    case let (x, y) where x == -y:
+        print("(\(x), \(y)) is on the line x == -y")
+    case let (x, y):
+        print("(\(x), \(y)) is just some arbitrary point")
+}
+
+
+

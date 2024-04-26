@@ -1,0 +1,94 @@
+struct Fahrenheit {
+    var temperature: Double
+    init() {
+        temperature = 32.0
+    }
+}
+var f = Fahrenheit()
+print("The default temperature is \(f.temperature) °Fahrenheit")
+// "The default temperature is 32.0° Fahrenheit"
+
+struct Celsius {
+    var temperatureInCelsius: Double
+    init(fromFahrenheit fahrenheit: Double) {
+        temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+    }
+    init(fromKelvin kelvin: Double) {
+        temperatureInCelsius = kelvin - 273.15
+    }
+    init(_ celsius: Double) {
+        temperatureInCelsius = celsius
+    }
+}
+let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
+print(boilingPointOfWater.temperatureInCelsius)
+// 100.0
+let freezingPointOfWater = Celsius(fromKelvin: 273.15)
+print(freezingPointOfWater.temperatureInCelsius)
+// 0.0
+let bodyTemperature = Celsius(37.0)
+print(bodyTemperature.temperatureInCelsius)
+// 37.0
+
+
+struct Color {
+    let red, green, blue: Double
+    init(red: Double, green: Double, blue: Double) {
+        self.red = red
+        self.green = green
+        self.blue = blue
+    }
+    init(white: Double) {
+        red = white
+        green = white
+        blue = white
+    }
+}
+
+let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
+let halfGray = Color(white: 0.5)
+//let veryGreen = Color(0.0, 1.0, 0.0) // no labels => error
+
+
+
+class SurveyQuestion {
+    let text: String
+    var response: String?
+    init(text: String) {
+        self.text = text
+    }
+    func ask() {
+        print(text)
+    }
+}
+let beetsQuestion = SurveyQuestion(text: "How about beets?")
+beetsQuestion.ask()
+// "How about beets?"
+beetsQuestion.response = "I also like beets. (But not with cheese.)"
+
+//Default Initializers
+class ShoppingListItem {
+    var name: String?
+    var quantity = 1
+    var purchased = false
+}
+var item = ShoppingListItem()
+
+//Memberwise Initializers for Structure Types
+struct Size {
+    var width = 0.0, height = 0.0
+}
+
+let twoByTwo = Size(width: 2.0, height: 2.0)
+
+let zeroByTwo = Size(height: 2.0)
+print(zeroByTwo.width, zeroByTwo.height)
+// "0.0 2.0"
+
+let zeroByZero = Size()
+print(zeroByZero.width, zeroByZero.height)
+// "0.0 0.0"
+
+
+
+
