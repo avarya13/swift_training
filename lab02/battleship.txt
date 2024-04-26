@@ -16,7 +16,7 @@ class GameModel {
 
 // проверка и размещение корабля на поле
     func validateGridAndPlaceShip(startRow: Int, endRow: Int, startCol: Int, endCol: Int) -> Bool {
-        // Will check the row or column to see if it is safe to place a ship there
+        
         var allValid = true
     
         for r in startRow..<endRow {
@@ -42,7 +42,6 @@ class GameModel {
     
     // попытка размещения корабля на поле
     func tryToPlaceShipOnGrid(row: Int, col: Int, direction: String, length: Int) -> Bool {
-        // Based on direction will call helper method to try and place a ship on the grid
         var startRow = row
         var endRow = row + 1
         var startCol = col
@@ -78,7 +77,7 @@ class GameModel {
     
 // создание игрового поля и размещение кораблей
     func createComputerGrid() {
-    // Will create a 10x10 grid and randomly place down ships of different sizes in different directions
+   
         let rows = gridSize
         let cols = gridSize
     
@@ -103,7 +102,7 @@ class GameModel {
     
     // получение корректной позиции для выстрела
         func acceptValidBulletPlacement() -> (Int, Int) {
-    /* Will get valid row and column to place bullet shot */
+  
     var isValidPlacement = false
     var row = -1
     var col = -1
@@ -148,9 +147,6 @@ class GameModel {
             }
         }
     }
-    
-    
-    
     return (row, col)
 }
 
@@ -158,7 +154,7 @@ class GameModel {
 
     // проверка потоплен ли корабль
     func checkForShipSunk(row: Int, col: Int) -> Bool {
-        /* If all parts of a ship have been shot, it is sunk and we later increment ships sunk */
+      
         for position in shipPositions {
             let startRow = position[0]
             let endRow = position[1]
@@ -166,7 +162,6 @@ class GameModel {
             let endCol = position[3]
             
             if startRow <= row && row <= endRow && startCol <= col && col <= endCol {
-                // Ship found, now check if it's all sunk
                 for r in startRow...endRow {
                     for c in startCol...endCol {
                         if grid[r][c] != "X" {
@@ -181,7 +176,7 @@ class GameModel {
 
 // обновление состояния поля после выстрела
     func shootBullet() {
-        /* Updates grid and ships based on where the bullet was shot */
+     
         let (row, col) = acceptValidBulletPlacement()
         print("")
         print("----------------------------")
@@ -205,7 +200,7 @@ class GameModel {
 
 // проверка условий окончания игры
     func checkForGameOver() {
-        /* If all ships have been sunk or we run out of bullets it's game over */
+       
         if numOfShips == numOfShipsSunk {
             print("Congrats you won!")
             gameOver = true
@@ -218,8 +213,6 @@ class GameModel {
 
 
 }
-
-
 
 
 // Представление (View) - отображение игрового состояния
@@ -268,7 +261,7 @@ class GameController {
     }
     
 
-     // инициализация и запуск игры, отображение поля, обработка хода игрока    
+     // инициализация и запуск игры, отображение поля, обработка хода     
     func playGame() {
         print("-----Welcome to Battleships-----")
         print("You have 50 bullets to take down 8 ships, may the battle begin!")
